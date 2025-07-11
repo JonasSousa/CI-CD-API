@@ -1,1 +1,19 @@
+name: CI/CD Trigger
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que preferir
+
+jobs:
+  trigger-projetoBooking:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send repository_dispatch to projetoBooking
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+            https://api.github.com/repos/JonasSousa/projetoBooking/dispatches \
+            -d '{"event_type": "run-postman-tests"}'
 
